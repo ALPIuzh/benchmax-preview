@@ -1,0 +1,27 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+.dist/
+.venv/
+venv/
+env/
+
+runs/
+.benchmax-reference-cache/
+*.egg-info/
+dist/
+build/
+
+docs/_build/
+docs/notebooks/
+
+# Private notebook connection settings and obfuscation mappings.
+.local/*
+!.local/slurm-demo.example.json

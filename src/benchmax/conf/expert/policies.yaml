@@ -1,0 +1,20 @@
+# Curated from ALPIuzh/benchmax-dev on 2026-10-10, including completed TPE winners.
+# One final checkpoint per game, selected by minimum recorded exact exploitability
+# across the published IPPO/MAPPO teachers (approximately 10M training steps).
+# These are best-found, selected-seed scores, not unbiased algorithm estimates.
+# Each SHA-256 pins a stored policy document and, transitively, its tensor archive.
+# Update a reference explicitly after evaluating a replacement; loading never reranks.
+bucket_id: ALPIuzh/benchmax-preview
+policies:
+  # IPPO, seed 1 (tuning cohort); exact exploitability 0.014218837022781372.
+  rock_paper_scissors: 521b580e1eb9ec2d081db3b0a6c38da79843e2f6c677d2ce09bd657dd89edc10
+  # IPPO, seed 1 (tuning cohort); exact exploitability 0.011122639266249332.
+  kuhn_poker: a9fe0d6e944a2911cfc164570246f4a3313d870b83ecafe22597cb0c065469b5
+  # MAPPO, seed 2 (tuning cohort); exact exploitability 0.11704707550676713.
+  phantom_tic_tac_toe: ed18fa715d75a24562848c0a715ef389cf3cd748528cadc2a9ab7f2e4799ef21
+  # MAPPO, seed 1 (tuning cohort); exact exploitability 0.16783773997334772.
+  abrupt_phantom_tic_tac_toe: d388b5ccc11da29b9c461fc9097ffcbc4551c5de4d56cf509c2fc77204f2ece0
+  # MAPPO, seed 0 (tuning cohort); exact exploitability 0.00016841076961504609.
+  dark_hex_3x3: ff8d0e85d3cc1d7a10ef650a7ba62f3715e42c45e83492af92e11997d1d912f9
+  # MAPPO, seed 1 (tuning cohort); exact exploitability 0.17586814388910768.
+  abrupt_dark_hex_3x3: 9dc7a33a6a3db536237f409128942912183c770cf6835139ab397c38358bef66

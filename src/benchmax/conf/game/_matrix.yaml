@@ -1,0 +1,2 @@
+# Defaults shared by every registered finite matrix game.
+evaluator: matrix

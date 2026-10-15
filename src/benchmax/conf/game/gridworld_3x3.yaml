@@ -1,0 +1,49 @@
+_target_: benchmax.games.tabular.gridworld.Gridworld
+name: gridworld_3x3
+evaluator: discounted_nash_gap
+_params_:
+  rows: 3
+  columns: 3
+  goal: [0, 2]
+  discount: 0.9
+  initial_state: [[1, 0], [2, 1]]
+_fixed_params_: [rows, columns]
+description: |-
+  Two-player, zero-sum pursuit on a 3x3 grid, as a tabular Markov game.
+
+  Both agents occupy distinct cells, giving 72 states, each identifying the
+  positions of both agents. Players are identified by ``0`` and ``1``, and both
+  have the action encoding ``0`` for left, ``1`` for right, ``2`` for up, and
+  ``3`` for down. Rows increase downwards, so ``up`` decreases the row index.
+  All four actions are legal in every state.
+
+  The environment is simultaneous, so every non-terminal :class:`TimeStep` has
+  both players acting. Its observation is the one-hot encoding of the joint
+  state, identical for both players: the game is perfect-information.
+
+  Transitions are deterministic. An agent whose action would take it off the
+  grid stays where it is, and an agent standing on the goal cannot move. If the
+  two agents would land on the same cell, or would exchange cells, neither
+  moves.
+
+  The goal is the top-right cell. An agent standing on it receives ``1.0`` on
+  every step and its opponent ``-1.0``, so the goal is absorbing and rewarding
+  rather than terminal. Episodes therefore never end and are never truncated by
+  the game itself; the objective is the discounted return at ``discount``, and
+  the starting state places both agents three steps from the goal, giving the
+  game a Nash value of zero.
+
+  This configuration states its layout outright, so the game the name refers to
+  is always the same one and ``seed`` is not consulted. Overriding ``goal`` or
+  ``initial_state`` with ``null`` draws it instead, from ``seed``, which
+  defaults to 0 so a drawn layout is still reproducible, and whatever is drawn
+  is recorded in the game's ``params``. A ``seed`` of ``null`` draws from fresh
+  entropy and warns, since nothing then records which game was evaluated. The
+  grid stays 3x3 either way: that is what this name means.
+
+  No expert is configured, deliberately. This game has many equilibria -- any
+  pair of paths where neither player lets the other reach the goal first -- and
+  ``nash_equilibrium_expert`` returns whichever its linear programs select,
+  which is not stable across solver versions. An experiment whose subject is how
+  much of the state space an expert's demonstrations cover must say which
+  equilibrium it means, by pinning the states along that path.

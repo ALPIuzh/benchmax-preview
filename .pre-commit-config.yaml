@@ -1,0 +1,26 @@
+# Install once with `uv run pre-commit install`.
+repos:
+  - repo: local
+    hooks:
+      - id: obfuscate-notebooks
+        name: obfuscate notebook outputs
+        entry: python .github/scripts/obfuscate_notebooks.py
+        language: system
+        files: \.ipynb$
+        require_serial: true
+
+      - id: normalize-notebooks
+        name: normalize notebook metadata
+        entry: python .github/scripts/normalize_notebooks.py
+        language: system
+        files: \.ipynb$
+        description: >-
+          Strip the interpreter version, kernel choice, and cell identifiers a
+          notebook records about whoever ran it. Outputs are kept.
+
+      - id: ruff
+        name: ruff
+        entry: uv run ruff check --fix
+        language: system
+        types_or: [python, pyi, jupyter]
+        require_serial: true

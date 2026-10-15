@@ -1,0 +1,11 @@
+# Finite-budget MCTS reports match results, not certified exploitability.
+_target_: benchmax.evaluation.OpponentEvaluator
+opponent:
+  _target_: benchmax.integrations.openspiel.mcts.OpenSpielMCTSOpponent
+  max_simulations: 1000
+  uct_c: 2.0
+  rollouts: 1
+  solve: true
+episodes: 100
+batch_size: 128
+seed: 0

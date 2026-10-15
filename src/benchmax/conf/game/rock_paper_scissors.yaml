@@ -1,0 +1,9 @@
+_extends_: _matrix
+_target_: benchmax.games.matrix.TwoPlayerZeroSumMatrixGame
+name: rock_paper_scissors
+payoffs:
+  - [0.0, -1.0, 1.0]
+  - [1.0, 0.0, -1.0]
+  - [-1.0, 1.0, 0.0]
+max_episode_steps: 1
+_fixed_: [action_spaces, payoffs]

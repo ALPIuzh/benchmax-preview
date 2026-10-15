@@ -1,0 +1,15 @@
+{% extends "furo/page.html" %}
+{% block content %}
+{% if pagename.startswith("notebooks/") %}
+{% set notebook_path = pagename ~ ".ipynb" %}
+<p><a href="{{ repository_url }}/blob/{{ repository_branch }}/{{ notebook_path | urlencode }}">View notebook on GitHub</a></p>
+{% endif %}
+{{ super() }}
+{% endblock %}
+{% block footer %}
+<div class="benchmax-footer">
+  <span>Developed at <a href="https://www.ifi.uzh.ch/en/alpi.html">ALPI Lab</a> · University of Zurich</span>
+  <a href="{{ repository_url }}">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+{{ super() }}
+{% endblock %}

@@ -1,0 +1,27 @@
+# dark_hex_3x3: iql; selected 2026-10-06 from native-sweep-20261006.
+# Candidate 0; 25/50 configurations scored over seeds 0, 1, 2.
+# Mean tuning exact exploitability: 0.
+_source_: benchmarl.iql
+total_frames: 10000000
+_params_:
+  experiment:
+    lr: 0.002
+    adam_eps: 1.0e-05
+    gamma: 0.99
+    clip_grad_norm: true
+    clip_grad_val: 1.0
+    off_policy_collected_frames_per_batch: 8192
+    off_policy_n_envs_per_worker: 64
+    off_policy_n_optimizer_steps: 32
+    off_policy_train_batch_size: 512
+    off_policy_memory_size: 1000000
+    off_policy_init_random_frames: 0
+    exploration_eps_init: 1.0
+    exploration_eps_end: 0.05
+    exploration_anneal_frames: 10000000
+    polyak_tau: 0.001
+  algorithm:
+    loss_function: smooth_l1
+    delay_value: true
+  model:
+    num_cells: [512, 512, 512]

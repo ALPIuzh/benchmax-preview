@@ -1,0 +1,73 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv run --no-project --with ruff ruff check src tests
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - install: base
+            python: "3.11"
+            extras: ""
+          - install: base
+            python: "3.12"
+            extras: ""
+          - install: training
+            python: "3.11"
+            extras: "--extra training"
+    name: test (${{ matrix.install }}, python ${{ matrix.python }})
+    steps:
+      - uses: actions/checkout@v4
+
+      # The _exp_a_spiel extension is compiled during install and needs a C++20
+      # compiler, Boost headers, and OpenMP.
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libboost-dev
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv python install ${{ matrix.python }}
+
+      - run: uv sync --python ${{ matrix.python }} ${{ matrix.extras }}
+
+      # A missing optional dependency makes its tests skip rather than fail, so
+      # the suite would stay green while an entire subsystem went unexercised.
+      # Assert the environment is what this job claims before trusting a pass.
+      - name: Check the installed environment matches the job
+        run: |
+          uv run python - <<'PY'
+          import importlib.util, sys
+          install = "${{ matrix.install }}"
+          for module, wanted in (
+              ("benchmarl", install == "training"),
+              ("huggingface_hub", True),
+          ):
+              found = importlib.util.find_spec(module) is not None
+              if wanted != found:
+                  sys.exit(f"expected {module} {'present' if wanted else 'absent'}, found {found}")
+          print("environment matches:", "${{ matrix.install }}")
+          PY
+
+      - run: uv run pytest -q

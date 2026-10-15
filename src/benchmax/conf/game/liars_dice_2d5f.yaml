@@ -1,0 +1,31 @@
+name: liars_dice_2d5f
+_source_: openspiel.liars_dice
+_params_:
+  numdice: 2
+  dice_sides: 5
+  bidding_rule: reset-face
+_fixed_params_: [numdice, dice_sides]
+evaluator:
+  _use_: exp_a_spiel
+  traverser: Ld2d5fEvaluator
+description: |-
+  Two-player, single-round Liar's Dice backed by OpenSpiel.
+
+  Each player privately rolls two five-sided dice. The four initial chance
+  rolls are sampled internally during :meth:`GameInstance.reset`, which
+  returns player 0's first decision. Players then alternate public bids about
+  how many dice show a particular face, or call the preceding bidder a liar.
+  Face 5 is wild and counts as a match for every bid.
+
+  Actions ``0`` through ``19`` encode bids in reset-face order: action ``a``
+  bids quantity ``a // 5 + 1`` of face ``a % 5 + 1``. A higher quantity may
+  reset the face to any value, while an unchanged quantity requires a higher
+  face. Action ``20`` calls liar and is legal only after a bid.
+
+  The acting player observes OpenSpiel's flattened 33-value, perfect-recall
+  information-state tensor. It contains that player's private dice and the
+  public bidding history without revealing the opponent's dice. Calling liar
+  terminates the episode with zero-sum rewards of ``1.0`` and ``-1.0``.
+  Episodes cannot be truncated.
+
+  Exact exploitability evaluation is available.

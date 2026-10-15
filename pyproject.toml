@@ -1,0 +1,86 @@
+[build-system]
+requires = [
+    "scikit-build-core>=0.11",
+    "pybind11>=2.13",
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "benchmax"
+version = "0.1.0"
+description = "Exploitability benchmark for multi-agent RL"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "third_party/exp_a_spiel/LICENSE"]
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "cyclopts>=4.23,<5",
+    "huggingface-hub>=1.33,<2",
+    "hydra-core>=1.3",
+    "msgspec>=0.20",
+    "numpy>=2.2",
+    "omegaconf>=2.3",
+    "open-spiel==1.6.15",
+    "packaging>=24",
+]
+
+[project.entry-points."benchmax.execution_evidence"]
+benchmarl = "benchmax.integrations.benchmarl.evidence:resolve"
+exp_a_spiel = "benchmax.integrations.exp_a_spiel.evidence:resolve"
+
+[project.entry-points."benchmax.policy_codecs"]
+"benchmax.tabular-policy.npz" = "benchmax.execution.artifacts.tabular"
+"benchmax.neural-policy.npz" = "benchmax.integrations.benchmarl.artifact"
+"benchmax.exp-a-spiel-indexed-policy.npz" = "benchmax.integrations.exp_a_spiel.artifact"
+
+[project.scripts]
+benchmax = "benchmax.cli:main"
+
+[project.optional-dependencies]
+stockfish = ["python-chess>=1.999,<2"]
+training = [
+    "benchmarl==1.5.2",
+    "torch==2.10.0",
+    "torchrl==0.11.1",
+    "torchvision==0.25.0",
+]
+
+[dependency-groups]
+docs = [
+    "sphinx>=8.2,<9",
+    "furo>=2024.8,<2027",
+    "myst-nb>=1.3,<2",
+    "sphinx-copybutton>=0.5,<1",
+]
+# Historical Optuna version used by the random and TPE tuning scripts.
+tuning = ["optuna==5.0.0"]
+dev = [
+    "pre-commit>=4.0",
+    "pytest>=8.4",
+    "ruff>=0.16.1",
+]
+notebook = [
+    "jupyterlab>=4.4",
+    "matplotlib>=3.10",
+]
+
+[tool.scikit-build]
+cmake.build-type = "Release"
+wheel.packages = ["src/benchmax"]
+sdist.include = [
+    "CMakeLists.txt",
+    "src/benchmax/integrations/exp_a_spiel/_exp_a_spiel.cpp",
+    "src/benchmax/integrations/exp_a_spiel/_liars_dice.cpp",
+    "tests/integrations/test_exp_a_spiel_binding.py",
+    "third_party/**",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint.per-file-ignores]
+# Preserve the byte-identical historical cluster snapshots and recorded hashes.

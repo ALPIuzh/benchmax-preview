@@ -1,0 +1,25 @@
+# Bare names for BenchMARL's algorithms. These are aliases: the algorithm is
+# BenchMARL's, with BenchMARL's own defaults.
+#
+# Per-game tuning snapshots are separate, editable entries in presets/.
+# Selecting an alias keeps the provider's defaults.
+ippo:
+  _extends_: benchmarl.ippo
+
+mappo:
+  _extends_: benchmarl.mappo
+
+iql:
+  _extends_: benchmarl.iql
+
+cfr:
+  _target_: benchmax.training.cfr.CFRTrainingFunction
+  iterations: 1000
+  plus: false
+  _fixed_: [plus]
+
+cfr_plus:
+  _target_: benchmax.training.cfr.CFRTrainingFunction
+  iterations: 1000
+  plus: true
+  _fixed_: [plus]

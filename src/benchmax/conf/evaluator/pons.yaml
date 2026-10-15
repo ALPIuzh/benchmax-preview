@@ -1,0 +1,9 @@
+# Explicitly installed Connect Four engine; no automatic fallback.
+_target_: benchmax.evaluation.OpponentEvaluator
+opponent:
+  _target_: benchmax.integrations.pons.opponent.PonsOpponent
+  executable: null
+  timeout: 60
+episodes: 1000
+batch_size: 128
+seed: 0

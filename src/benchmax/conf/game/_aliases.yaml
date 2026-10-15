@@ -1,0 +1,20 @@
+# Bare names for provider games. An alias changes nothing about the game; it
+# only gives it a friendlier name, and may fix parameters at the provider's
+# defaults so the name cannot come to mean something else.
+kuhn_poker:
+  _extends_: openspiel.kuhn_poker
+  name: kuhn_poker
+
+dark_hex_3x3:
+  _extends_: openspiel.dark_hex
+  name: dark_hex_3x3
+  _fixed_params_: [board_size, num_rows, num_cols]
+
+phantom_tic_tac_toe:
+  _extends_: openspiel.phantom_ttt
+  name: phantom_tic_tac_toe
+  _fixed_params_: [gameversion]
+
+connect_four:
+  _extends_: openspiel.connect_four
+  name: connect_four

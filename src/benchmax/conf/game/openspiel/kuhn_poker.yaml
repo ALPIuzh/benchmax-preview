@@ -1,0 +1,27 @@
+# Kuhn Poker exactly as OpenSpiel defines it.
+evaluator: nash_conv
+description: |-
+  Two-player, zero-sum Kuhn Poker backed by OpenSpiel.
+
+  Kuhn Poker uses a three-card deck containing jack, queen, and king. Both
+  players ante one chip, receive one private card, and leave the third card
+  unseen. Player 0 acts first. A hand ends when a player folds or when the
+  players reach a showdown; the higher private card wins at showdown.
+
+  Players are identified by ``0`` and ``1``. Both have the contextual action
+  encoding ``0`` for pass and ``1`` for bet. Passing means checking when no
+  bet is outstanding and folding when facing a bet. Betting means placing a
+  one-chip bet when no bet is outstanding and calling when facing a bet.
+
+  The environment is sequential, so each nonterminal :class:`TimeStep`
+  contains exactly one acting player. Its observation is OpenSpiel's
+  11-element perfect-recall information-state tensor, represented as an
+  immutable tuple of floats. It contains the acting player's private card
+  and the public betting history without revealing the opponent's card. The
+  initial deal is a chance event resolved internally by
+  :meth:`GameInstance.reset`.
+
+  Rewards are zero before termination. Terminal rewards are net chip returns:
+  the winner receives ``1.0`` after a fold or an unbet showdown and ``2.0``
+  after a called bet, while the loser receives the corresponding negative
+  reward. Episodes cannot be truncated.

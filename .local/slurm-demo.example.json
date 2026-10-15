@@ -1,0 +1,14 @@
+{
+  "target": {
+    "host": "login.cluster.example",
+    "python": "/shared/example_project/benchmax/.venv/bin/python",
+    "workspace": "/shared/example_project/benchmax",
+    "runs": "/scratch/demo_user/benchmax/runs",
+    "artifacts": "/shared/example_project/benchmax/artifacts",
+    "account": "example_project",
+    "partition": "standard",
+    "user": "demo_user",
+    "control_path": "/tmp/benchmax-demo-%C"
+  },
+  "replacements": {}
+}

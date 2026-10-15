@@ -1,0 +1,11 @@
+_target_: benchmax.evaluation.OpponentEvaluator
+opponent:
+  _target_: benchmax.integrations.stockfish.opponent.StockfishOpponent
+  executable: null
+  nodes: 10000
+  elo: null
+  hash_mb: 16
+  timeout: 30.0
+episodes: 100
+seed: 0
+batch_size: 16

@@ -1,0 +1,24 @@
+name: abrupt_phantom_tic_tac_toe
+_source_: openspiel.phantom_ttt
+_params_:
+  gameversion: abrupt
+_fixed_params_: [gameversion]
+evaluator:
+  _use_: exp_a_spiel
+  traverser: AbruptPtttEvaluator
+description: |-
+  Abrupt two-player Phantom Tic-Tac-Toe.
+
+  Opponent moves are hidden. Actions ``0`` through ``8`` select the board
+  cells in row-major order. If a player attempts to move in an occupied cell,
+  control passes to the other player.
+
+  Each acting player observes OpenSpiel's 108-value, perfect-recall
+  information-state tensor as an immutable tuple of floats. A terminal win
+  rewards the winner with ``1.0`` and the loser with ``-1.0``; a draw rewards
+  both players with ``0.0``. Episodes are never truncated.
+
+  Exact evaluation requires a directly batched policy profile and rejects
+  BenchMAX's scalar-policy adapter. Its first call constructs and retains a
+  large native traverser in an isolated evaluation worker; this abrupt variant
+  requires a high-memory machine.

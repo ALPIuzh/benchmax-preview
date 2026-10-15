@@ -1,0 +1,21 @@
+# Phantom Tic-Tac-Toe exactly as OpenSpiel defines it, whose defaults are
+# the classical collision rule.
+evaluator:
+  _use_: exp_a_spiel
+  traverser: PtttEvaluator
+description: |-
+  Classical two-player Phantom Tic-Tac-Toe.
+
+  Opponent moves are hidden. Actions ``0`` through ``8`` select the board
+  cells in row-major order. If a player attempts to move in an occupied cell,
+  that player keeps the turn and may try again.
+
+  Each acting player observes OpenSpiel's 108-value, perfect-recall
+  information-state tensor as an immutable tuple of floats. A terminal win
+  rewards the winner with ``1.0`` and the loser with ``-1.0``; a draw rewards
+  both players with ``0.0``. Episodes are never truncated.
+
+  Exact evaluation requires a directly batched policy profile and rejects
+  BenchMAX's scalar-policy adapter. Its first call constructs a large native
+  traverser in an isolated evaluation worker, where the runtime retains it for
+  reuse.

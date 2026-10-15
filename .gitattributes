@@ -1,0 +1,9 @@
+# Notebooks are JSON with base64 blobs inside, so the default diff is unreadable
+# and the default merge cannot resolve anything. nbdime understands both:
+#
+#     uv run --group notebook nbdime config-git --enable
+#
+# which points the driver below at it. Without nbdime installed the attribute is
+# inert and git falls back to its usual behaviour.
+*.ipynb diff=jupyternotebook
+*.ipynb merge=jupyternotebook

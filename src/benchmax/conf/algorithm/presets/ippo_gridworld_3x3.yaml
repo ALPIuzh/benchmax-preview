@@ -1,0 +1,23 @@
+# gridworld_3x3: ippo; selected 2026-10-06 from native-sweep-20261006.
+# Candidate 43; 50/50 configurations scored over seeds 0, 1, 2.
+# Mean tuning exact exploitability: 7.99223477053.
+_source_: benchmarl.ippo
+total_frames: 10000000
+_params_:
+  experiment:
+    lr: 0.002
+    adam_eps: 1.0e-05
+    gamma: 0.9
+    clip_grad_norm: true
+    clip_grad_val: 2.0
+    on_policy_collected_frames_per_batch: 2048
+    on_policy_n_envs_per_worker: 64
+    on_policy_n_minibatch_iters: 2
+    on_policy_minibatch_size: 256
+  algorithm:
+    entropy_coef: 0.05
+    clip_epsilon: 0.1
+    critic_coef: 0.125
+    lmbda: 0.95
+  model:
+    num_cells: [64, 64]

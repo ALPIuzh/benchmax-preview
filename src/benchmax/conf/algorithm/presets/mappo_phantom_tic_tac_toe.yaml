@@ -1,0 +1,25 @@
+# phantom_tic_tac_toe: mappo; selected 2026-10-10 from native-tpe-20261008.
+# Candidate 50 (TPE); 100/100 configurations (50 random + 50 TPE), seeds 0, 1, 2.
+# Mean tuning exact exploitability: 0.1364978752278399.
+# Selected tuning mean; no independent fresh-seed validation of this configuration.
+# Campaign SHA-256: 4578697ba4fac98f7dbd783e780aa491f57e4c22a728045eef92d15b95252e63.
+_source_: benchmarl.mappo
+total_frames: 10000000
+_params_:
+  experiment:
+    lr: 0.0009551962649643385
+    adam_eps: 1.0e-05
+    gamma: 0.99
+    clip_grad_norm: true
+    clip_grad_val: 1.628483529780069
+    on_policy_collected_frames_per_batch: 8192
+    on_policy_n_envs_per_worker: 64
+    on_policy_n_minibatch_iters: 4
+    on_policy_minibatch_size: 2048
+  algorithm:
+    entropy_coef: 0.019071239060561563
+    clip_epsilon: 0.028620849624130446
+    critic_coef: 0.0715971487490689
+    lmbda: 0.95
+  model:
+    num_cells: [512, 512, 512]

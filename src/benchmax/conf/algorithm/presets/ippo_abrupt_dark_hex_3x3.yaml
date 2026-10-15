@@ -1,0 +1,25 @@
+# abrupt_dark_hex_3x3: ippo; selected 2026-10-10 from native-tpe-20261008.
+# Candidate 99 (TPE); 100/100 configurations (50 random + 50 TPE), seeds 0, 1, 2.
+# Mean tuning exact exploitability: 0.2119915249773097.
+# Selected tuning mean; no independent fresh-seed validation of this configuration.
+# Campaign SHA-256: 4578697ba4fac98f7dbd783e780aa491f57e4c22a728045eef92d15b95252e63.
+_source_: benchmarl.ippo
+total_frames: 10000000
+_params_:
+  experiment:
+    lr: 0.00010609676547817542
+    adam_eps: 1.0e-05
+    gamma: 0.99
+    clip_grad_norm: true
+    clip_grad_val: 0.780118198375948
+    on_policy_collected_frames_per_batch: 4096
+    on_policy_n_envs_per_worker: 64
+    on_policy_n_minibatch_iters: 8
+    on_policy_minibatch_size: 1024
+  algorithm:
+    entropy_coef: 0.0385107475300338
+    clip_epsilon: 0.027358348952405187
+    critic_coef: 0.7792677956247728
+    lmbda: 0.95
+  model:
+    num_cells: [512, 512, 512]

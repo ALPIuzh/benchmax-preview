@@ -1,0 +1,26 @@
+name: abrupt_dark_hex_3x3
+_source_: openspiel.dark_hex
+_params_:
+  gameversion: adh
+_fixed_params_: [board_size, num_rows, num_cols, gameversion]
+evaluator:
+  _use_: exp_a_spiel
+  traverser: AbruptDhEvaluator
+description: |-
+  Abrupt two-player Dark Hex on a 3x3 board.
+
+  Player 0 tries to connect the top and bottom edges; player 1 tries to
+  connect the left and right edges. Opponent stones are hidden. Actions
+  ``0`` through ``8`` select cells in row-major order. If a player attempts
+  to move in an occupied cell, that player learns of the collision and
+  control passes to the other player.
+
+  Each acting player observes OpenSpiel's flattened 162-value, perfect-recall
+  information-state tensor. A terminal connection rewards the winner
+  with ``1.0`` and the loser with ``-1.0``. Hex cannot draw, and episodes are
+  never truncated.
+
+  Exact evaluation requires a directly batched policy profile and rejects
+  BenchMAX's scalar-policy adapter. Its first call constructs a large native
+  traverser in an isolated evaluation worker, where the runtime retains it for
+  reuse.

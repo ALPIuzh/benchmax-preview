@@ -1,0 +1,22 @@
+# Defaults to 6x7, four in a row; all game parameters remain overridable.
+evaluator: pons
+description: |-
+  Two-player, zero-sum Connect Four backed by OpenSpiel.
+
+  The default board has six rows and seven columns, with four discs needed
+  to win. Override rows, columns and x_in_row through params. Players drop
+  discs into columns; player 0 moves first. Actions are zero-based column
+  indices, and full columns are illegal. A win rewards the winner with 1
+  and the loser with -1; a full board without a line is a draw worth 0.
+
+  Each player observes three board planes: player 0 discs, player 1 discs,
+  and empty cells. Observation size is 3 * rows * columns (126 by default).
+  Episodes end naturally when a player wins or the board fills.
+
+  The default Pons opponent requires x_in_row=4 and a compatible board size.
+  Install a separate executable for each size with `benchmax setup pons
+  --rows R --columns C`; evaluation automatically locates that board's build.
+  Nonstandard win lengths remain playable with evaluator=None or a compatible
+  evaluator. Unsupported Pons configurations raise an error, without fallback.
+  Evaluation never downloads or builds software. It reports match results
+  and a sampled exploitability lower bound against perfect play.
